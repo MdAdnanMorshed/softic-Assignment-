@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../../data/models/add_product_model.dart';
 import '../../../data/repositories/repo.dart';
 import '../../../routes/app_pages.dart';
 
@@ -27,6 +27,7 @@ class AddProductController extends GetxController {
 //
   final count = 0.obs;
   XFile? image1;
+
   /// product qty
   var quantity = ''.obs;
   var unit = ''.obs;
@@ -52,35 +53,28 @@ class AddProductController extends GetxController {
     if (registerFormKey.currentState!.validate()) {
       registerFormKey.currentState!.save();
 
-      Map<String, dynamic> qtyBody = {
-        'quantity': quantity.value,
-        'unit': unit.value,
-        'unitValue': unitValue.value,
-        'pastQuantity': pastQuantity.value,
-      };
+      AddProductModel data = AddProductModel(
+          name: productName.value,
+          barcode: barcode.value,
+          description: description.value,
+          subCategory: 0,
+          brand: 0,
+          quantity: Quantity(
+              quantity: int.parse(quantity.value),
+              unit: unit.value,
+              unitValue: unitValue.value,
+              pastQuantity: int.parse(pastQuantity.value)),
+          productPrice: ProductPrice(
+              price: int.parse(price.value),
+              unitPrice: int.parse(unitPrice.value),
+              mrp: int.parse(mrp.value)));
 
-      Map<String, dynamic> priceBody = {
-        'price': price.value,
-        'unitPrice': unitPrice.value,
-        'mrp': mrp.value,
-      };
-
-      Map<String, dynamic> addProductBody = {
-        'name': productName.value,
-        'barcode': barcode.value,
-        'description': description.value,
-        'image': image.value,
-        'subCategory': subCategory.value,
-        'brand': brand.value,
-        'quantity': jsonEncode(qtyBody),
-        'productPrice': jsonEncode(priceBody),
-      };
-
-      print('AddProductController.addProductController $addProductBody');
+      // print(
+      //     'AddProductController.addProductController >>>>  ${jsonEncode(data)}');
 
       try {
         Repo()
-            .addProductRepo(rgMapBody: addProductBody,img: image1)
+            .addProductRepo(data: data, img: image1)
             .timeout(const Duration(seconds: 500))
             .then((value) {
           if (value) {
@@ -95,19 +89,19 @@ class AddProductController extends GetxController {
         }).onError((error, stackTrace) => null);
 
         productNameController.clear();
-         productBarcodeController.clear();
-         productDescriptionController .clear();
-         productSubCategoryController.clear();
-         productBrandController.clear();
+        productBarcodeController.clear();
+        productDescriptionController.clear();
+        productSubCategoryController.clear();
+        productBrandController.clear();
 
-         productQtyController.clear();
-         productUnitController.clear();
-         productUnitValueController .clear();
-         productPastQuantityController .clear();
+        productQtyController.clear();
+        productUnitController.clear();
+        productUnitValueController.clear();
+        productPastQuantityController.clear();
 
-         productPriceController.clear();
-         productUnitPriceController.clear();
-         productMRPController .clear();
+        productPriceController.clear();
+        productUnitPriceController.clear();
+        productMRPController.clear();
       } catch (e) {
         if (kDebugMode) {
           print('RegisterController.registerController error:$e');

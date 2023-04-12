@@ -1,12 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:iv/app/data/models/add_product_model.dart';
 import '../utiles/api_url.dart';
 import 'package:http/http.dart' as http;
 
 import '../utiles/local_helper/shared_value_helper.dart';
 
-class Repo {
+class Repo extends GetConnect {
   @override
   void onInit() {}
 
@@ -75,8 +77,6 @@ class Repo {
     }
   }
 
-
-
   /// onGoing 90%
   Future deleteProductRepo(String id) async {
     Uri apiUrl =
@@ -142,44 +142,28 @@ class Repo {
       throw Exception(error);
     }
   }
+
   /// onGoing 95%
-  addProductRepo({required Map rgMapBody,  required XFile? img}) async {
+  addProductRepo({required AddProductModel data, required XFile? img}) async {
+    postStartDayTripWithImage(file: img!, data: data);
     print('Image Path REPO >>> ${img!.path.toString()}');
-    print('product >>> ${rgMapBody}');
-    var request = http.MultipartRequest('POST', Uri.parse('https://secure-falls-43052.herokuapp.com/api/create-products'));
-
-    Map<String, dynamic> qtyBody = {
-      'quantity': '2',//rgMapBody['quantity'],
-      'unit': '2',//rgMapBody['unit'],
-      'unitValue':'2',// rgMapBody['unitValue'],
-      'pastQuantity':'2',// rgMapBody['pastQuantity'],
+    print(' tojson >>> ${data.toJson()}');
+  /*  Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      "Authorization": "Bearer ${access_token.$}",
     };
+    var request = http.MultipartRequest(
+        'POST',
+        Uri.parse(
+            'https://secure-falls-43052.herokuapp.com/api/create-products'));
 
-    Map<String, dynamic> priceBody = {
-      'price': '15',//rgMapBody['price'],
-      'unitPrice': '14',//rgMapBody['unitPrice'],
-      'mrp':'15',//rgMapBody['mrp'],
-    };
+    request.fields.addAll({jsonEncode(data.toJson())} as Map<String, String>);
 
-    print('priceBody ${jsonEncode(priceBody)}');
-    print('qtyBody ${jsonEncode(qtyBody)}');
-
-    request.fields.addAll({
-    'name': 'ad',//rgMapBody['name'],
-    'barcode':'123',//rgMapBody['barcode'],
-    'description': 'dfd',//rgMapBody['description'],
-    'subCategory': 'fgg',//rgMapBody['subCategory'],
-    'brand': '0',//rgMapBody['brand'],
-    'quantity': jsonEncode(qtyBody),
-    'productPrice': jsonEncode(priceBody),
-    });
-
-
-
-    var imagePath = await http.MultipartFile.fromPath('image', img.path.toString());
+    request.headers.addAll(headers);
+    var imagePath =
+        await http.MultipartFile.fromPath('image', img.path.toString());
 
     request.files.add(imagePath);
-
 
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -191,6 +175,44 @@ class Repo {
       print("status code else >>>${response.statusCode}");
       print(response.reasonPhrase);
       return false;
-    }
+    }*/
+  }
+
+  Future<bool?> postStartDayTripWithImage({
+
+    required XFile file,
+    required AddProductModel data,
+  }) async {
+    const String apiUrl = "https://secure-falls-43052.herokuapp.com/api/create-products";
+
+    Map<String, String> header = {"Authorization": "Bearer ${access_token.$}"};
+    final FormData formData = FormData({
+      "name": "ab",
+      "barcode": "abc",
+      "description": "as",
+      "image": MultipartFile(file.path, filename: file.path.split("/").last),
+      "subCategory": 1851,
+      "brand": 1901,
+      "quantity": jsonEncode(data.quantity) ,
+      "productPrice":jsonEncode( data.productPrice)
+    });
+    print(formData.files.toString());
+    try {
+      final Response response = await GetConnect().post(
+        apiUrl,
+        formData,
+        headers: header,
+      );
+      print('response.body===========');
+      print(response.statusCode);
+
+      print(response.body);
+      print('response.body');
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {}
+
+    return null;
   }
 }
