@@ -130,7 +130,7 @@ class AuthenticationView extends GetView<AuthenticationController> {
       onTap: () {
         if (controller.loginFormKey.currentState!.validate()) {
           controller.loginFormKey.currentState!.save();
-         // controller.loginController(context: context);
+          controller.loginController(context: context);
         }
       },
       child: Container(

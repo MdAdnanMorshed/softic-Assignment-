@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../data/repositories/repo.dart';
 import '../../../routes/app_pages.dart';
 
@@ -25,7 +26,7 @@ class AddProductController extends GetxController {
   var productMRPController = TextEditingController();
 
   final count = 0.obs;
-
+  XFile? image1;
   /// product qty
   var quantity = ''.obs;
   var unit = ''.obs;
@@ -79,7 +80,7 @@ class AddProductController extends GetxController {
 
       try {
         Repo()
-            .addProductRepo(rgMapBody: addProductBody)
+            .addProductRepo(rgMapBody: addProductBody,img: image1)
             .timeout(const Duration(seconds: 500))
             .then((value) {
           if (value) {

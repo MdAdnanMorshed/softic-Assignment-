@@ -35,8 +35,8 @@ class CustomAppDrawer extends StatelessWidget {
                             color: Colors.grey,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 20,
+                                color: Colors.red,
+                                blurRadius: 15,
                                 offset: const Offset(5, 5),
                               ),
                             ],
@@ -63,10 +63,10 @@ class CustomAppDrawer extends StatelessWidget {
                   )),
             ),
 
-            _buildDrawerMenuTitle(Icon(Icons.home, size: 18), 'Home'.tr, 1),
-             _buildDrawerMenuTitle(Icon(Icons.app_registration, size: 18), 'Login'.tr, 2),
-            _buildDrawerMenuTitle(Icon(Icons.contacts, size: 18), 'AboutUs'.tr, 3),
-            _buildDrawerMenuTitle(Icon(Icons.phone, size: 18), 'ContactUs'.tr, 6),
+            _buildDrawerMenuTitle(Icon(Icons.home, size: 18), 'Home', 1),
+             _buildDrawerMenuTitle(Icon(Icons.app_registration, size: 18), 'Login', 2),
+
+            _buildDrawerMenuTitle(Icon(Icons.phone, size: 18), 'Profile', 6),
             access_token.$ != ""
                 ? _buildDrawerMenuTitle(
                     Icon(Icons.logout, size: 18), 'Logout'.tr, 0)
@@ -86,7 +86,7 @@ class CustomAppDrawer extends StatelessWidget {
                 ),
               ],
             )
-            //_buildDrawerMenuTitle(Icon(Icons.logout,size: 18),'logout',0),
+
           ],
         ),
       ),
@@ -107,13 +107,13 @@ class CustomAppDrawer extends StatelessWidget {
             {
               print('CustomAppDrawer._buildDrawerMenuTitle Register');
 
-              Get.toNamed(Routes.ADDPRODUCT);
+              Get.toNamed(Routes.AUTHENTICATION);
               break;
             }
 
           case 6:
             {
-              Get.toNamed(Routes.CONTACTUS);
+              Get.toNamed(Routes.UPDATE_PROFILE);
               print('CustomAppDrawer._buildDrawerMenuTitle Contact');
               break;
             }

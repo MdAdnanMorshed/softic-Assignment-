@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_value/shared_value.dart';
 import 'app/data/utiles/app_colors.dart';
 import 'app/data/utiles/app_strings.dart';
-import 'app/data/utiles/language/app_tr.dart';
 
 import 'app/data/utiles/local_helper/shared_value_helper.dart';
 import 'app/init_first_controller/app_binding.dart';
@@ -48,7 +47,6 @@ void main() async {
         initialBinding: AppBinding(),
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
-        translationsKeys: AppTranslation.translationsKeys,
 
         theme: ThemeData(
           useMaterial3: true,

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:iv/app/data/models/product_model.dart';
 import 'package:iv/app/data/utiles/local_helper/shared_value_helper.dart';
 
+import '../data/models/user_profile_model.dart';
 import '../data/repositories/repo.dart';
 
 
@@ -13,14 +14,12 @@ import '../data/repositories/repo.dart';
 class InitFirstController extends GetxController  with GetTickerProviderStateMixin {
 
   var homeAllProductList = [].obs;
-
+  var profileData=UserProfileModel().obs;
 
   @override
   void onInit() async {
-    if(access_token.$!=''){
-      homeAllProductsCTR();
-      getProfile();
-    }
+    homeAllProductsCTR();
+    getProfile();
     super.onInit();
   }
 
@@ -57,6 +56,7 @@ class InitFirstController extends GetxController  with GetTickerProviderStateMix
     var resValue =await Repo().getProfileRepo();
       var bodyMap = resValue;
       if (bodyMap != null) {
+        //profileData.value=UserProfileModel.fromJson(bodyMap);
         if (kDebugMode) {
           print('InitFirstController.getProfile');
         print(bodyMap);

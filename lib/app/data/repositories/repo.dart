@@ -75,7 +75,6 @@ class Repo {
     }
   }
 
-  /// onGoing
 
 
   /// onGoing 90%
@@ -133,7 +132,7 @@ class Repo {
         print(response.body);
       }
 
-      return json.decode(response.body);
+      return response;
     } on Exception catch (exception) {
       if (kDebugMode) {
         print(exception);
@@ -143,43 +142,41 @@ class Repo {
       throw Exception(error);
     }
   }
-
-
-  addProductRepo({required Map rgMapBody,   XFile? img}) async {
-    print('Image Path REPO >>> ${img}');
+  /// onGoing 95%
+  addProductRepo({required Map rgMapBody,  required XFile? img}) async {
+    print('Image Path REPO >>> ${img!.path.toString()}');
     print('product >>> ${rgMapBody}');
     var request = http.MultipartRequest('POST', Uri.parse('https://secure-falls-43052.herokuapp.com/api/create-products'));
 
     Map<String, dynamic> qtyBody = {
-      'quantity': rgMapBody['quantity'],
-      'unit': rgMapBody['unit'],
-      'unitValue': rgMapBody['unitValue'],
-      'pastQuantity': rgMapBody['pastQuantity'],
+      'quantity': '2',//rgMapBody['quantity'],
+      'unit': '2',//rgMapBody['unit'],
+      'unitValue':'2',// rgMapBody['unitValue'],
+      'pastQuantity':'2',// rgMapBody['pastQuantity'],
     };
 
     Map<String, dynamic> priceBody = {
-      'price': rgMapBody['price'],
-      'unitPrice': rgMapBody['unitPrice'],
-      'mrp':rgMapBody['mrp'],
+      'price': '15',//rgMapBody['price'],
+      'unitPrice': '14',//rgMapBody['unitPrice'],
+      'mrp':'15',//rgMapBody['mrp'],
     };
 
     print('priceBody ${jsonEncode(priceBody)}');
     print('qtyBody ${jsonEncode(qtyBody)}');
 
     request.fields.addAll({
-      'user_id': rgMapBody['user_id'],
-    'name': rgMapBody['name'],
-    'barcode':rgMapBody['barcode'],
-    'description': rgMapBody['description'],
-
-    'subCategory': rgMapBody['subCategory'],
-    'brand': rgMapBody['brand'],
+    'name': 'ad',//rgMapBody['name'],
+    'barcode':'123',//rgMapBody['barcode'],
+    'description': 'dfd',//rgMapBody['description'],
+    'subCategory': 'fgg',//rgMapBody['subCategory'],
+    'brand': '0',//rgMapBody['brand'],
     'quantity': jsonEncode(qtyBody),
     'productPrice': jsonEncode(priceBody),
     });
 
 
-    var imagePath = await http.MultipartFile.fromPath('image', img!.path);
+
+    var imagePath = await http.MultipartFile.fromPath('image', img.path.toString());
 
     request.files.add(imagePath);
 
@@ -187,11 +184,11 @@ class Repo {
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());
-      print("uploaded Upload done >>> ${response.statusCode}");
+      print("status code >>> ${response.statusCode}");
       return true;
     } else {
       print(await response.stream.bytesToString());
-      print("uploaded Upload else >>>${response.statusCode}");
+      print("status code else >>>${response.statusCode}");
       print(response.reasonPhrase);
       return false;
     }

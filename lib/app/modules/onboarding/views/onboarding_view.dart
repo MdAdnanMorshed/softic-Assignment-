@@ -83,10 +83,10 @@ class OnboardingView extends GetView<OnboardingController> {
         preferences = await SharedPreferences.getInstance();
         await preferences.setString(AppStrings.onBoardingKey, AppStrings.valueStop);
 
-        Get.offNamed(Routes.BOTTOMNAVIGATIONBAR);
+        Get.offNamed(Routes.AUTHENTICATION);
       },
       onSkip: (){
-        Get.offNamed(Routes.BOTTOMNAVIGATIONBAR);
+        Get.offNamed(Routes.AUTHENTICATION);
       },
       showSkipButton: true,
       skipOrBackFlex: 0,

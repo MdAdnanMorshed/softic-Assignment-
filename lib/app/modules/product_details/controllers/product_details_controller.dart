@@ -17,7 +17,6 @@ class ProductDetailsController extends GetxController {
   final  productInfo= ProductModel().obs;
 
 
-  var productDetailsInfo= ProductDetailsModel().obs;
 
 
   final isLoadingData=false.obs;

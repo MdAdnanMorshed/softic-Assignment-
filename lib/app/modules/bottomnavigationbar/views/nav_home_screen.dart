@@ -17,6 +17,7 @@ class NavHomeScreen extends StatelessWidget {
     var controller = Get.put(InitFirstController());
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(title: Text('Home',style: TextStyle(color: Colors.white),),),
         drawer: const CustomAppDrawer(),
         body: _buildSAllProducts(context, controller),
         floatingActionButton: FloatingActionButton(
@@ -186,4 +187,7 @@ class ProductListWidget extends StatelessWidget {
       ),
     ));
   }
+
+
+
 }

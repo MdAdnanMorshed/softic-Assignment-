@@ -24,8 +24,7 @@ class BottomNavigationbarController extends GetxController
   final wishlist = [].obs;
 
 
-  var productDetailsInfo = ProductDetailsModel().obs;
-  final isLoadingDataAmountAddressApi = false.obs;
+   final isLoadingDataAmountAddressApi = false.obs;
   final count = 1.obs;
   var index = 2.obs;
   final totalAmount = 0.obs;

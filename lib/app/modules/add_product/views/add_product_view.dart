@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+
 import 'package:image_picker/image_picker.dart';
 import '../../../data/utiles/app_colors.dart';
 import '../../../data/utiles/app_strings.dart';
@@ -58,7 +58,7 @@ class AddProductView extends GetView<AddProductController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
 
-            AppSpace.spaceH12,
+
             CustomTextFormField(
               prefixIcon: const Icon(Icons.ac_unit),
               keyboardType: TextInputType.text,
@@ -131,9 +131,6 @@ class AddProductView extends GetView<AddProductController> {
             ),
             AppSpace.spaceH12,
 
-            Text('SubCategory List Dropdown '),
-            Text('Brand List Dropdown '),
-
             AppSpace.spaceH12,
 
             CustomTextFormField(
@@ -155,43 +152,65 @@ class AddProductView extends GetView<AddProductController> {
               //obscureText: controller.isHidePassword ? false : true,
             ),
             AppSpace.spaceH12,
-            CustomTextFormField(
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
 
-              keyboardType: TextInputType.number,
-              prefixIcon: const Icon(Icons.cable),
-              controller: controller.productUnitController,
-              hintText: 'Unit',
 
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please Enter your product unit';
-                }
-                return null;
-              },
-              onSaved: (value) {
-                controller.unit.value = value!;
-              },
+                Expanded(
+                  child:
+                  CustomTextFormField(
 
+                    keyboardType: TextInputType.number,
+                    prefixIcon: const Icon(Icons.cable),
+                    controller: controller.productUnitController,
+                    hintText: 'Unit',
+
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please Enter your product unit';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      controller.unit.value = value!;
+                    },
+
+                  ),
+
+                ),
+                AppSpace.spaceW6,
+                Expanded(
+                  child:
+                  CustomTextFormField(
+
+                    keyboardType: TextInputType.text,
+                    prefixIcon: const Icon(Icons.cable),
+                    controller: controller.productUnitValueController,
+                    hintText: 'Unit Value',
+
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please Enter your product unit value ';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      controller.unitValue.value = value!;
+                    },
+
+                  ),
+                ),
+              ],
             ),
+
+
+
+
             AppSpace.spaceH12,
-            CustomTextFormField(
 
-              keyboardType: TextInputType.number,
-              prefixIcon: const Icon(Icons.cable),
-              controller: controller.productUnitValueController,
-              hintText: 'Unit Value',
-
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please Enter your product unit value ';
-                }
-                return null;
-              },
-              onSaved: (value) {
-                controller.unitValue.value = value!;
-              },
-
-            ),
             AppSpace.spaceH12,
             CustomTextFormField(
 
@@ -211,44 +230,58 @@ class AddProductView extends GetView<AddProductController> {
               },
 
             ),
+
             AppSpace.spaceH12,
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
 
-            CustomTextFormField(
 
-              keyboardType: TextInputType.number,
-              prefixIcon: const Icon(Icons.cable),
-              controller: controller.productPriceController,
-              hintText: 'Price',
+                Expanded(
+                  child:CustomTextFormField(
 
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please Enter your product price';
-                }
-                return null;
-              },
-              onSaved: (value) {
-                controller.price.value = value!;
-              },
+                    keyboardType: TextInputType.number,
+                    prefixIcon: const Icon(Icons.cable),
+                    controller: controller.productPriceController,
+                    hintText: 'Price',
 
-            ),
-            AppSpace.spaceH12,
-            CustomTextFormField(
-              keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please Enter your product price';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      controller.price.value = value!;
+                    },
 
-              prefixIcon: const Icon(Icons.cable),
-              controller: controller.productUnitPriceController,
-              hintText: 'Unit Price',
+                  ),
 
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please Enter your product unit price';
-                }
-                return null;
-              },
-              onSaved: (value) {
-                controller.unitPrice.value = value!;
-              },
+                ),
+                AppSpace.spaceW6,
+                Expanded(
+                  child: CustomTextFormField(
+                    keyboardType: TextInputType.number,
 
+                    prefixIcon: const Icon(Icons.cable),
+                    controller: controller.productUnitPriceController,
+                    hintText: 'Unit Price',
+
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please Enter your product unit price';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      controller.unitPrice.value = value!;
+                    },
+
+                  ),
+                ),
+              ],
             ),
             AppSpace.spaceH12,
             CustomTextFormField(
@@ -268,6 +301,7 @@ class AddProductView extends GetView<AddProductController> {
               },
 
             ),
+
 
             AppSpace.spaceH12,
             Row(
@@ -386,8 +420,9 @@ class AddProductView extends GetView<AddProductController> {
 
                         final imageTemp = File(image.path);
 
-                         // controller.imagePath = imageTemp;
+                          controller.image1 = image;
 
+                          Get.back();
                       } on PlatformException catch (e) {
                         print("Failed to pick image: $e");
                       }
@@ -418,6 +453,7 @@ class AddProductView extends GetView<AddProductController> {
 
                         // controller.imagePath = imageTemp;
 
+                        Get.back();
                       } on PlatformException catch (e) {
                         print("Failed to pick image: $e");
                       }
