@@ -24,7 +24,7 @@ class AddProductController extends GetxController {
   var productPriceController = TextEditingController();
   var productUnitPriceController = TextEditingController();
   var productMRPController = TextEditingController();
-
+//
   final count = 0.obs;
   XFile? image1;
   /// product qty
